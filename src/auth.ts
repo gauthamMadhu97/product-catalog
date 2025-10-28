@@ -44,6 +44,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       if (account) {
         token.provider = account.provider;
+        if (account.provider === "github" && account.providerAccountId) {
+          token.id = `github-${account.providerAccountId}`;
+        }
       }
       return token;
     },
