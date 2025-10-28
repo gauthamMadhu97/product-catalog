@@ -1,5 +1,3 @@
-// TypeScript types for the Product Catalog application
-
 export interface Product {
   id: string;
   name: string;

@@ -1,4 +1,3 @@
-// Server Actions for wishlist operations
 'use server';
 
 import { revalidatePath } from 'next/cache';
@@ -34,7 +33,6 @@ export async function removeFromWishlist(formData: FormData) {
       };
     }
 
-    // Revalidate the wishlist page to show updated data
     revalidatePath('/wishlist');
 
     return {
@@ -72,7 +70,6 @@ export async function addToWishlistAction(formData: FormData) {
       productId
     );
 
-    // Revalidate relevant pages
     revalidatePath('/wishlist');
     revalidatePath(`/products/${productId}`);
 

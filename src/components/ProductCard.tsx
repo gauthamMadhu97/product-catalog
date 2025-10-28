@@ -1,4 +1,3 @@
-// Product Card component - reusable card for displaying product information
 import Link from 'next/link';
 import { Product } from '@/types';
 
@@ -10,7 +9,6 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link href={`/products/${product.id}`}>
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
-        {/* Product Image */}
         <div className="relative h-48 bg-gray-200">
           <img
             src={product.image}
@@ -24,7 +22,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
 
-        {/* Product Info */}
         <div className="p-4">
           <div className="flex items-start justify-between mb-2">
             <h3 className="text-lg font-semibold text-gray-800 line-clamp-1">

@@ -1,6 +1,3 @@
-// Products Listing Page - Server Component
-// Displays paginated product grid with category filtering
-
 import { Suspense } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/lib/data';
@@ -19,24 +16,20 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const category = params.category;
   const itemsPerPage = 6;
 
-  // Filter products by category if specified
   const filteredProducts = category
     ? products.filter(p => p.category.toLowerCase() === category.toLowerCase())
     : products;
 
-  // Calculate pagination
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
-  // Get unique categories for filter
   const categories = Array.from(new Set(products.map(p => p.category)));
 
   return (
     <div className="bg-gray-50 min-h-screen py-4 sm:py-6 lg:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Page Header */}
         <div className="mb-4 sm:mb-6 lg:mb-8">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
             Our Products
@@ -46,15 +39,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           </p>
         </div>
 
-        {/* Category Filter */}
         <div className="mb-4 sm:mb-6 lg:mb-8 flex flex-wrap gap-2">
           <a
             href="/products"
-            className={`px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-lg font-medium transition-colors ${
-              !category
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-lg font-medium transition-colors ${!category
                 ? 'bg-blue-600 text-white'
                 : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
+              }`}
           >
             All Products
           </a>
@@ -62,18 +53,16 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             <a
               key={cat}
               href={`/products?category=${cat.toLowerCase()}`}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-lg font-medium transition-colors ${
-                category?.toLowerCase() === cat.toLowerCase()
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-lg font-medium transition-colors ${category?.toLowerCase() === cat.toLowerCase()
                   ? 'bg-blue-600 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
+                }`}
             >
               {cat}
             </a>
           ))}
         </div>
 
-        {/* Products Grid */}
         <Suspense fallback={<ProductsLoading />}>
           {paginatedProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
@@ -90,7 +79,6 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           )}
         </Suspense>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <Pagination
             currentPage={page}

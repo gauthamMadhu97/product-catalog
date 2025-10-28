@@ -1,4 +1,3 @@
-// Not Found UI for non-existent products
 export default function NotFound() {
   return (
     <div className="bg-gray-50 min-h-screen py-8">

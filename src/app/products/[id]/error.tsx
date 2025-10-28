@@ -1,4 +1,3 @@
-// Error UI for product detail page
 'use client';
 
 import { useEffect } from 'react';

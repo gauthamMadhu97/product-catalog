@@ -1,4 +1,3 @@
-// Mock product data for the catalog
 import { Product } from '@/types';
 
 export const products: Product[] = [

@@ -1,5 +1,3 @@
-// Client Component for Add to Wishlist functionality
-// Uses useOptimistic for immediate UI feedback
 'use client';
 
 import { useState, useOptimistic, useTransition } from 'react';
@@ -30,7 +28,6 @@ export default function AddToWishlistButton({
       return;
     }
 
-    // Optimistic update - toggle the state immediately
     const newState = !optimisticInWishlist;
     startTransition(() => {
       setOptimisticInWishlist(newState);
@@ -50,12 +47,10 @@ export default function AddToWishlistButton({
       if (response.ok) {
         setIsInWishlist(newState);
       } else {
-        // Revert optimistic update on error
         setOptimisticInWishlist(!newState);
         alert(data.error || `Failed to ${newState ? 'add to' : 'remove from'} wishlist`);
       }
     } catch (error) {
-      // Revert optimistic update on error
       setOptimisticInWishlist(!newState);
       console.error('Error updating wishlist:', error);
       alert(`Failed to ${newState ? 'add to' : 'remove from'} wishlist. Please try again.`);
@@ -66,11 +61,10 @@ export default function AddToWishlistButton({
     <button
       onClick={handleToggleWishlist}
       disabled={isPending}
-      className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
-        optimisticInWishlist
+      className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${optimisticInWishlist
           ? 'bg-red-600 text-white hover:bg-red-700'
           : 'bg-blue-600 text-white hover:bg-blue-700'
-      }`}
+        }`}
     >
       {isPending ? (
         <span className="flex items-center justify-center">

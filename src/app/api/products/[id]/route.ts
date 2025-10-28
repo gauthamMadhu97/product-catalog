@@ -1,6 +1,3 @@
-// API Route: GET /api/products/[id]
-// Returns single product details by ID
-
 import { NextRequest, NextResponse } from 'next/server';
 import { products } from '@/lib/data';
 

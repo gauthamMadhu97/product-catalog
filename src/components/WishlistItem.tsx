@@ -1,4 +1,3 @@
-// Wishlist Item Component with Server Action for removal
 'use client';
 
 import Link from 'next/link';
@@ -25,7 +24,6 @@ export default function WishlistItem({ product }: WishlistItemProps) {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      {/* Product Image */}
       <Link href={`/products/${product.id}`}>
         <div className="relative h-48 bg-gray-200">
           <img
@@ -36,7 +34,6 @@ export default function WishlistItem({ product }: WishlistItemProps) {
         </div>
       </Link>
 
-      {/* Product Info */}
       <div className="p-4">
         <Link href={`/products/${product.id}`}>
           <h3 className="text-lg font-semibold text-gray-800 mb-2 hover:text-blue-600">
@@ -64,7 +61,6 @@ export default function WishlistItem({ product }: WishlistItemProps) {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="space-y-2">
           <Link
             href={`/products/${product.id}`}

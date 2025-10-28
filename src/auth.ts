@@ -42,14 +42,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
       }
-      // Add provider info for OAuth
       if (account) {
         token.provider = account.provider;
       }
       return token;
     },
     async session({ session, token }) {
-      // Add user ID to session
       if (session.user) {
         session.user.id = token.id as string;
       }
@@ -58,7 +56,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async authorized({ auth, request }) {
       const { pathname } = request.nextUrl;
 
-      // Allow public routes
       const isPublicRoute = ['/auth/signin', '/auth/signup', '/'].includes(pathname);
       if (isPublicRoute) return true;
 
@@ -68,7 +65,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60,
   },
 
   secret: process.env.NEXTAUTH_SECRET,

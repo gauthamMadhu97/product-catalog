@@ -1,4 +1,3 @@
-// Sign In Page - Authentication
 'use client';
 
 import { useState } from 'react';
@@ -41,7 +40,6 @@ export default function SignInPage() {
     }
   };
 
-  // Test credentials for demo
   const fillTestCredentials = () => {
     setEmail('test@example.com');
     setPassword('password123');
@@ -50,7 +48,6 @@ export default function SignInPage() {
   return (
     <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen py-8 sm:py-12 lg:py-16">
       <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Sign In Card */}
         <div className="bg-white rounded-lg shadow-md p-6 sm:p-8">
           <div className="text-center mb-6 sm:mb-8">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
@@ -61,7 +58,6 @@ export default function SignInPage() {
             </p>
           </div>
 
-          {/* Test Credentials Info */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
             <p className="text-xs sm:text-sm text-blue-800 mb-2">
               <strong>Test User:</strong> Use the credentials below to test the application.
@@ -74,14 +70,12 @@ export default function SignInPage() {
             </button>
           </div>
 
-          {/* Error Message */}
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
               <p className="text-xs sm:text-sm text-red-800">{error}</p>
             </div>
           )}
 
-          {/* Sign In Form */}
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             <div>
               <label
@@ -154,7 +148,6 @@ export default function SignInPage() {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
@@ -164,7 +157,6 @@ export default function SignInPage() {
             </div>
           </div>
 
-          {/* GitHub OAuth Button */}
           <button
             onClick={() => signIn('github', { callbackUrl: '/' })}
             className="w-full flex items-center justify-center gap-2 sm:gap-3 bg-gray-900 text-white px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg font-semibold hover:bg-gray-800 transition-colors"
@@ -175,7 +167,6 @@ export default function SignInPage() {
             Continue with GitHub
           </button>
 
-          {/* Additional Info */}
           <div className="mt-4 sm:mt-6 text-center">
             <p className="text-xs sm:text-sm text-gray-600">
               Don't have an account?{' '}
@@ -186,7 +177,6 @@ export default function SignInPage() {
           </div>
         </div>
 
-        {/* Info Section */}
         <div className="mt-6 sm:mt-8 text-center px-4">
           <p className="text-xs sm:text-sm text-gray-500">
             This is a demo application. Authentication is simulated for demonstration purposes.

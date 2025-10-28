@@ -1,13 +1,9 @@
-// API Route: POST /api/wishlist
-// Adds a product to the user's wishlist
-
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { wishlistService } from '@/lib/wishlist';
 
 export async function POST(request: NextRequest) {
   try {
-    // Check authentication
     const session = await auth();
 
     if (!session || !session.user) {
@@ -27,7 +23,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Add to wishlist
     const wishlistItem = wishlistService.addToWishlist(
       session.user.id!,
       productId
@@ -49,7 +44,6 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    // Check authentication
     const session = await auth();
 
     if (!session || !session.user) {
@@ -59,7 +53,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get user's wishlist
     const wishlistItems = wishlistService.getWishlistByUserId(session.user.id!);
 
     return NextResponse.json({
@@ -77,7 +70,6 @@ export async function GET(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    // Check authentication
     const session = await auth();
 
     if (!session || !session.user) {
@@ -97,7 +89,6 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Remove from wishlist
     const removed = wishlistService.removeFromWishlist(
       session.user.id!,
       productId

@@ -1,4 +1,3 @@
-// Product Detail Page - Server Component with Client Component for wishlist
 import { notFound } from 'next/navigation';
 import { products } from '@/lib/data';
 import AddToWishlistButton from '@/components/AddToWishlistButton';
@@ -21,7 +20,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
   const session = await auth();
 
-  // Check if product is already in wishlist
   const isInWishlist = session?.user?.id
     ? wishlistService.isInWishlist(session.user.id, product.id)
     : false;
@@ -29,7 +27,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   return (
     <div className="bg-gray-50 min-h-screen py-4 sm:py-6 lg:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb */}
         <nav className="mb-4 sm:mb-6 lg:mb-8 overflow-x-auto">
           <ol className="flex items-center space-x-2 text-xs sm:text-sm whitespace-nowrap">
             <li>
@@ -48,10 +45,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           </ol>
         </nav>
 
-        {/* Product Details */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-8">
-            {/* Product Image */}
             <div className="relative h-64 sm:h-80 lg:h-full bg-gray-200">
               <img
                 src={product.image}
@@ -65,7 +60,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               )}
             </div>
 
-            {/* Product Info */}
             <div className="p-4 sm:p-6 lg:p-8">
               <div className="mb-3 sm:mb-4">
                 <span className="inline-block bg-blue-100 text-blue-800 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded">
@@ -108,7 +102,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 </p>
               </div>
 
-              {/* Add to Wishlist Button - Client Component */}
               <div>
                 <AddToWishlistButton
                   productId={product.id}
@@ -117,7 +110,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 />
               </div>
 
-              {/* Product Features */}
               <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t">
                 <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
                   Product Features

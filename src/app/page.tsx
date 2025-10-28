@@ -1,6 +1,3 @@
-// Home Page - Server Component
-// Displays welcome message and navigation to main sections
-
 import Link from 'next/link';
 import { auth } from '@/auth';
 
@@ -10,7 +7,6 @@ export default async function Home() {
   return (
     <div className="bg-gradient-to-b from-blue-50 to-white h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-        {/* Hero Section */}
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
             Welcome to Product Catalog
@@ -27,8 +23,6 @@ export default async function Home() {
             </div>
           )}
         </div>
-
-        {/* Features Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12 lg:mb-16">
           <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
             <h3 className="text-lg sm:text-xl font-semibold mb-2">Browse Products</h3>

@@ -1,14 +1,9 @@
-// File-based wishlist storage (persists across server restarts)
-// In production, this would be replaced with actual database operations
-
 import { WishlistItem } from '@/types';
 import fs from 'fs';
 import path from 'path';
 
-// Path to store wishlist data
 const WISHLIST_FILE = path.join(process.cwd(), 'data', 'wishlist.json');
 
-// Ensure data directory exists
 function ensureDataDir() {
   const dataDir = path.join(process.cwd(), 'data');
   if (!fs.existsSync(dataDir)) {
@@ -16,7 +11,6 @@ function ensureDataDir() {
   }
 }
 
-// Read wishlist from file
 function readWishlist(): WishlistItem[] {
   ensureDataDir();
 
@@ -38,7 +32,6 @@ function readWishlist(): WishlistItem[] {
   }
 }
 
-// Write wishlist to file
 function writeWishlist(items: WishlistItem[]) {
   ensureDataDir();
 
@@ -50,17 +43,14 @@ function writeWishlist(items: WishlistItem[]) {
 }
 
 export const wishlistService = {
-  // Get all wishlist items for a user
   getWishlistByUserId(userId: string): WishlistItem[] {
     const allItems = readWishlist();
     return allItems.filter(item => item.userId === userId);
   },
 
-  // Add item to wishlist
   addToWishlist(userId: string, productId: string): WishlistItem {
     const allItems = readWishlist();
 
-    // Check if item already exists
     const existing = allItems.find(
       item => item.userId === userId && item.productId === productId
     );
@@ -81,7 +71,6 @@ export const wishlistService = {
     return newItem;
   },
 
-  // Remove item from wishlist
   removeFromWishlist(userId: string, productId: string): boolean {
     const allItems = readWishlist();
     const index = allItems.findIndex(
@@ -97,7 +86,6 @@ export const wishlistService = {
     return false;
   },
 
-  // Check if item is in wishlist
   isInWishlist(userId: string, productId: string): boolean {
     const allItems = readWishlist();
     return allItems.some(
@@ -105,7 +93,6 @@ export const wishlistService = {
     );
   },
 
-  // Get all items (for debugging)
   getAllItems(): WishlistItem[] {
     return readWishlist();
   }

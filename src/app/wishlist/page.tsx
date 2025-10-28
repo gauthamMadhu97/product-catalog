@@ -1,6 +1,3 @@
-// Wishlist Page - Protected Route (Server Component)
-// Displays user's wishlist items with Server Actions for removal
-
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { wishlistService } from '@/lib/wishlist';
@@ -43,13 +40,18 @@ export default async function WishlistPage() {
         {/* Wishlist Content */}
         {wishlistProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {wishlistProducts.map(product => (
-              <WishlistItem
-                key={product.id}
-                product={product}
-                userId={session.user.id!}
-              />
-            ))}
+            {wishlistProducts.map(product => {
+              if (product !== null) {
+                return (
+                  <WishlistItem
+                    key={product.id}
+                    product={product}
+                    userId={session.user.id!}
+                  />
+                );
+              }
+              return null; // or return a fallback UI for when the product is null
+            })}
           </div>
         ) : (
           <div className="bg-white rounded-lg shadow-md p-8 sm:p-12 lg:p-16 text-center">

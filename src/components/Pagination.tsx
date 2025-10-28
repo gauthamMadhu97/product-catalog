@@ -1,4 +1,3 @@
-// Pagination component for product listing
 'use client';
 
 import Link from 'next/link';
@@ -26,7 +25,6 @@ export default function Pagination({ currentPage, totalPages, category }: Pagina
 
   return (
     <div className="flex justify-center items-center space-x-2">
-      {/* Previous Button */}
       {currentPage > 1 && (
         <Link
           href={getPageUrl(currentPage - 1)}
@@ -36,24 +34,21 @@ export default function Pagination({ currentPage, totalPages, category }: Pagina
         </Link>
       )}
 
-      {/* Page Numbers */}
       <div className="flex space-x-1">
         {pages.map(page => (
           <Link
             key={page}
             href={getPageUrl(page)}
-            className={`px-4 py-2 rounded-lg font-medium ${
-              page === currentPage
+            className={`px-4 py-2 rounded-lg font-medium ${page === currentPage
                 ? 'bg-blue-600 text-white'
                 : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
+              }`}
           >
             {page}
           </Link>
         ))}
       </div>
 
-      {/* Next Button */}
       {currentPage < totalPages && (
         <Link
           href={getPageUrl(currentPage + 1)}
