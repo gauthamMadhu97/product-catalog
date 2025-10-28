@@ -1,6 +1,6 @@
 // Product Detail Page - Server Component with Client Component for wishlist
 import { notFound } from 'next/navigation';
-import { products } from '@/lib/data';
+import { productService } from '@/lib/services';
 import AddToWishlistButton from '@/components/AddToWishlistButton';
 import { auth } from '@/auth';
 import { wishlistService } from '@/lib/wishlist';
@@ -13,7 +13,9 @@ interface ProductDetailPageProps {
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { id } = await params;
-  const product = products.find(p => p.id === id);
+
+  // Fetch product directly from database
+  const product = productService.getById(id);
 
   if (!product) {
     notFound();

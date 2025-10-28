@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Add to wishlist
-    const wishlistItem = wishlistService.addToWishlist(
+    const wishlistItem = wishlistService.add(
       session.user.id!,
       productId
     );
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user's wishlist
-    const wishlistItems = wishlistService.getWishlistByUserId(session.user.id!);
+    const wishlistItems = wishlistService.getByUserId(session.user.id!);
 
     return NextResponse.json({
       success: true,
@@ -98,7 +98,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Remove from wishlist
-    const removed = wishlistService.removeFromWishlist(
+    const removed = wishlistService.remove(
       session.user.id!,
       productId
     );

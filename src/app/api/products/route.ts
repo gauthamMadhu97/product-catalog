@@ -2,7 +2,7 @@
 // Returns list of all products with optional pagination
 
 import { NextRequest, NextResponse } from 'next/server';
-import { products } from '@/lib/data';
+import { getProducts, getProductsByCategory } from '@/lib/data';
 import { PaginatedResponse, Product } from '@/types';
 
 export async function GET(request: NextRequest) {
@@ -14,8 +14,8 @@ export async function GET(request: NextRequest) {
 
     // Filter by category if provided
     let filteredProducts = category
-      ? products.filter(p => p.category.toLowerCase() === category.toLowerCase())
-      : products;
+      ? getProductsByCategory(category)
+      : getProducts();
 
     // Calculate pagination
     const startIndex = (page - 1) * limit;

@@ -2,7 +2,7 @@
 // Returns single product details by ID
 
 import { NextRequest, NextResponse } from 'next/server';
-import { products } from '@/lib/data';
+import { getProductById } from '@/lib/data';
 
 export async function GET(
   request: NextRequest,
@@ -10,7 +10,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const product = products.find(p => p.id === id);
+    const product = getProductById(id);
 
     if (!product) {
       return NextResponse.json(

@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
+import { userService } from "@/lib/services";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -14,16 +15,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Email and password required");
         }
-        if (credentials.email === "test@example.com" && credentials.password === "password123") {
-          return {
-            id: "test-user-id",
-            email: "test@example.com",
-            name: "Test User",
-            image: "https://api.dicebear.com/7.x/avataaars/svg?seed=test@example.com"
-          };
+
+        // Verify user from database
+        const user = userService.verify(
+          credentials.email as string,
+          credentials.password as string
+        );
+
+        if (!user) {
+          throw new Error("Invalid credentials");
         }
 
-        throw new Error("Invalid credentials");
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          image: user.image
+        };
       }
     }),
     GitHub({
@@ -38,20 +46,39 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   callbacks: {
-    async jwt({ token, user, account }) {
-      if (user) {
+    async jwt({ token, user, account, profile }) {
+      // Handle OAuth users - save to database and get consistent user ID
+      if (account && profile && account.provider !== 'credentials') {
+        // Use provider account ID as stable identifier (e.g., GitHub user ID)
+        // This ensures the same user always gets the same ID across sessions
+        const stableUserId = `${account.provider}-${account.providerAccountId}`;
+
+        userService.createOAuthUser(
+          stableUserId,
+          user?.email || (profile as any).email,
+          user?.name || (profile as any).name,
+          user?.image || (profile as any).avatar_url || (profile as any).picture,
+          account.provider
+        );
+
+        // Set the stable ID in the token
+        token.id = stableUserId;
+      }
+      // For credentials provider, use the user ID from the database
+      else if (user?.id) {
         token.id = user.id;
       }
-      // Add provider info for OAuth
-      if (account) {
-        token.provider = account.provider;
+      // Fallback: if token already has an ID from previous session, keep it
+      else if (!token.id && token.sub) {
+        token.id = token.sub;
       }
+
       return token;
     },
     async session({ session, token }) {
-      // Add user ID to session
-      if (session.user) {
-        session.user.id = token.id as string;
+      // Add user ID to session - always required
+      if (session.user && token.id) {
+        session.user.id = token.id;
       }
       return session;
     },

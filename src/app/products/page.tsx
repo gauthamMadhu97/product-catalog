@@ -3,7 +3,7 @@
 
 import { Suspense } from 'react';
 import ProductCard from '@/components/ProductCard';
-import { products } from '@/lib/data';
+import { getProducts, getProductsByCategory, getCategories } from '@/lib/data';
 import Pagination from '@/components/Pagination';
 
 interface ProductsPageProps {
@@ -21,8 +21,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
 
   // Filter products by category if specified
   const filteredProducts = category
-    ? products.filter(p => p.category.toLowerCase() === category.toLowerCase())
-    : products;
+    ? getProductsByCategory(category)
+    : getProducts();
 
   // Calculate pagination
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -31,7 +31,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
   // Get unique categories for filter
-  const categories = Array.from(new Set(products.map(p => p.category)));
+  const categories = getCategories();
 
   return (
     <div className="bg-gray-50 min-h-screen py-4 sm:py-6 lg:py-8">

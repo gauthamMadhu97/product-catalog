@@ -3,8 +3,7 @@
 
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { wishlistService } from '@/lib/wishlist';
-import { products } from '@/lib/data';
+import { wishlistService } from '@/lib/services';
 import WishlistItem from '@/components/WishlistItem';
 
 export default async function WishlistPage() {
@@ -14,16 +13,8 @@ export default async function WishlistPage() {
     redirect('/auth/signin');
   }
 
-  // Get user's wishlist
-  const wishlistItems = wishlistService.getWishlistByUserId(session.user.id!);
-
-  // Get full product details for wishlist items
-  const wishlistProducts = wishlistItems
-    .map(item => {
-      const product = products.find(p => p.id === item.productId);
-      return product ? { ...product, addedAt: item.addedAt } : null;
-    })
-    .filter(Boolean);
+  // Get user's wishlist with full product details from database
+  const wishlistProducts = wishlistService.getWithProducts(session.user.id!);
 
   return (
     <div className="bg-gray-50 min-h-screen py-4 sm:py-6 lg:py-8">
