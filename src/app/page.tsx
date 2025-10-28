@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <div className="bg-gradient-to-b from-blue-50 to-white h-full">
+    <div className="bg-gradient-to-b from-blue-50 to-white h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         {/* Hero Section */}
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
